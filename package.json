@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "npm install --prefix backend",
     "build": "echo 'Root build completed'",
-    "start": "node backend/server.js"
+    "start": "node backend/server.js",
+    "preview": "node backend/server.js"
   },
   "keywords": [],
   "author": "",
