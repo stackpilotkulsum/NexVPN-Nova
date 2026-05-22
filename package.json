@@ -1,0 +1,14 @@
+{
+  "name": "nexvpn-nova-root",
+  "version": "1.0.0",
+  "description": "Root package runner for NEXVPN-Nova",
+  "main": "backend/server.js",
+  "scripts": {
+    "postinstall": "npm install --prefix backend",
+    "build": "echo 'Root build completed'",
+    "start": "node backend/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
