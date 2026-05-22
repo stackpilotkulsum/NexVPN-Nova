@@ -1,0 +1,35 @@
+.network-monitor { color: var(--text-primary); }
+.monitor-section { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.section-header h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--text-primary); }
+.section-note { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); margin-bottom: 14px; }
+.ip-info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.ip-info-card { background: var(--bg-base); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+.ip-info-card.main-ip { border-color: var(--accent-cyan); }
+.ip-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px; text-transform: uppercase; }
+.ip-value { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-primary); word-break: break-all; }
+.latency-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+.latency-card { background: var(--bg-base); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+.latency-server { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12px; color: var(--text-primary); margin-bottom: 2px; }
+.latency-city { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); margin-bottom: 8px; }
+.latency-ms { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; }
+.latency-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; margin-bottom: 8px; }
+.latency-bar-container { background: var(--bg-elevated); border-radius: 2px; height: 4px; overflow: hidden; }
+.latency-bar { height: 100%; border-radius: 2px; }
+.system-info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.sys-card { background: var(--bg-base); border: 1px solid var(--border); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 4px; }
+.sys-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+.sys-value { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-primary); }
+.ifaces-list { margin-top: 14px; }
+.ifaces-list h4 { font-family: 'Syne', sans-serif; font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
+.iface-row { display: flex; gap: 12px; padding: 8px 10px; background: var(--bg-base); border-radius: 6px; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; flex-wrap: wrap; }
+.iface-name { color: var(--accent-cyan); font-weight: 700; }
+.iface-ip, .iface-mask, .iface-mac { color: var(--text-secondary); }
+.dns-results { display: flex; flex-direction: column; gap: 8px; }
+.dns-result-row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.dns-result-row.resolved { background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.15); }
+.dns-result-row.failed { background: rgba(255,51,102,0.05); border: 1px solid rgba(255,51,102,0.15); }
+.dns-domain { color: var(--text-primary); flex: 1; }
+.dns-status { flex-shrink: 0; }
+.dns-addrs { color: var(--accent-cyan); font-size: 11px; }
+.dns-latency { color: var(--text-muted); flex-shrink: 0; }

@@ -1,0 +1,33 @@
+.server-selection { color: var(--text-primary); }
+.server-selection-header { margin-bottom: 20px; }
+.server-selection-header h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; color: var(--text-primary); margin-bottom: 4px; }
+.server-selection-header p { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+.current-server { background: var(--bg-elevated); border: 1px solid var(--accent-cyan); border-radius: 10px; padding: 16px; margin-bottom: 20px; box-shadow: var(--glow-cyan); }
+.selected-server-info { display: flex; align-items: center; gap: 14px; }
+.server-flag { font-size: 28px; }
+.server-details { flex: 1; }
+.server-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--text-primary); }
+.server-location { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); }
+.server-ip { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+.server-status { display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--success); }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; }
+.servers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.server-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; padding: 16px; cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden; }
+.server-card:hover { border-color: var(--accent-cyan); box-shadow: var(--glow-cyan); transform: translateY(-2px); }
+.server-card.selected { border-color: var(--success); background: rgba(0,255,136,0.05); box-shadow: var(--glow-green); }
+.server-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.server-info h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--text-primary); margin-bottom: 2px; }
+.server-info .location { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary); margin-bottom: 1px; }
+.server-info .ip { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); }
+.server-metrics { margin: 10px 0; display: flex; flex-direction: column; gap: 6px; }
+.metric { display: flex; align-items: center; gap: 8px; }
+.metric-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); width: 70px; }
+.metric-bar { flex: 1; height: 4px; background: var(--bg-base); border-radius: 2px; overflow: hidden; }
+.metric-fill { height: 100%; border-radius: 2px; transition: width 0.3s ease; }
+.metric-value { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary); width: 50px; text-align: right; }
+.ping-btn { width: 100%; padding: 6px; background: transparent; border: 1px solid var(--border); border-radius: 6px; color: var(--text-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-top: 8px; transition: all 0.2s; }
+.ping-btn:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+.ping-result { margin-top: 8px; display: flex; flex-direction: column; gap: 3px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); }
+.selected-badge { position: absolute; top: 10px; right: 10px; background: var(--success); color: var(--bg-deep); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+.connecting-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(2,4,8,0.8); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; z-index: 100; font-family: 'JetBrains Mono', monospace; color: var(--accent-cyan); }
+.connecting-spinner { width: 32px; height: 32px; border: 2px solid var(--border); border-top-color: var(--accent-cyan); border-radius: 50%; animation: spin 0.8s linear infinite; }

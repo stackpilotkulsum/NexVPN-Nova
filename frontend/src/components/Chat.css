@@ -1,0 +1,18 @@
+.chat-container { color: var(--text-primary); display: flex; flex-direction: column; height: 500px; }
+.chat-header { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--text-primary); margin-bottom: 14px; }
+.chat-messages { flex: 1; overflow-y: auto; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; }
+.message { padding: 10px 14px; border-radius: 8px; max-width: 75%; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.5; }
+.message.sent { background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2); color: var(--accent-cyan); align-self: flex-end; }
+.message.received { background: var(--bg-base); border: 1px solid var(--border); color: var(--text-secondary); align-self: flex-start; }
+.message.system { background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.2); color: #a78bfa; align-self: center; font-size: 11px; }
+.message-sender { font-size: 10px; color: var(--text-muted); margin-bottom: 3px; }
+.message-time { font-size: 10px; color: var(--text-muted); margin-top: 3px; text-align: right; }
+.chat-input-row { display: flex; gap: 8px; }
+.chat-input { flex: 1; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 12px; outline: none; transition: border-color 0.2s; }
+.chat-input:focus { border-color: var(--accent-cyan); }
+.chat-input::placeholder { color: var(--text-muted); }
+.user-list { margin-bottom: 12px; }
+.user-list-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.user-item { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); transition: background 0.2s; }
+.user-item:hover, .user-item.selected { background: rgba(0,212,255,0.08); color: var(--accent-cyan); }
+.user-online-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); }
