@@ -1,610 +1,554 @@
+/* Sleek Minimalist Terminal Aesthetic */
 .vpn-client {
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.2s ease-out;
+    font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+    color: #e0e0e0;
 }
 
 .vpn-client-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-    gap: 12px;
+    align-items: flex-start;
+    border-bottom: 1px solid #333;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .vpn-client-title {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 16px;
 }
 
 .vpn-icon {
-    font-size: 28px;
-    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+    font-size: 20px;
+    background: #fff;
+    color: #000;
+    padding: 6px 10px;
+    border-radius: 2px;
+    font-weight: bold;
 }
 
 .vpn-client-title h2 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 22px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #00d4ff, #00ff88);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #fff;
+    margin: 0 0 6px 0;
 }
 
 .vpn-subtitle {
-    font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    color: var(--text-muted);
-    margin: 2px 0 0 0;
+    color: #888;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+/* Status Badge */
 .tunnel-status-badge {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text-secondary);
-    background: var(--bg-base);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 6px 14px;
+    gap: 10px;
+    font-size: 11px;
+    text-transform: uppercase;
+    background: #111;
+    border: 1px solid #444;
+    padding: 6px 12px;
+    color: #aaa;
 }
 
 .tunnel-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--text-muted);
-    transition: all 0.3s;
+    width: 6px;
+    height: 6px;
+    background: #555;
 }
 
 .tunnel-dot.active {
-    background: #00ff88;
-    box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
-    animation: pulseDot 2s ease infinite;
+    background: #00ffcc;
+    box-shadow: none;
 }
 
-/* Section nav */
+/* Sections Navigation */
 .vpn-sections {
     display: flex;
-    gap: 4px;
-    margin-bottom: 20px;
-    overflow-x: auto;
-    scrollbar-width: thin;
-    background: var(--bg-base);
-    border-radius: 10px;
-    padding: 4px;
-    border: 1px solid var(--border);
+    gap: 0;
+    border-bottom: 1px solid #333;
+    margin-bottom: 24px;
 }
 
 .vpn-section-btn {
-    flex: 1;
-    min-width: 120px;
-    padding: 10px 16px;
-    border: none;
+    padding: 12px 24px;
     background: transparent;
-    color: var(--text-muted);
-    font-family: 'Syne', sans-serif;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #666;
+    font-family: 'Inter', sans-serif;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
-    border-radius: 8px;
-    transition: all 0.2s;
-    white-space: nowrap;
+    transition: color 0.1s, border-color 0.1s;
 }
 
 .vpn-section-btn:hover {
-    color: var(--text-secondary);
-    background: rgba(255, 255, 255, 0.03);
+    color: #ccc;
 }
 
 .vpn-section-btn.active {
-    color: var(--accent-cyan);
-    background: var(--bg-card);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    border-bottom-color: #00ffcc;
 }
 
-/* Quick start steps */
+/* Content Areas */
+.vpn-client-content {
+    padding: 10px 0;
+}
+
+/* Quick Start Cards */
 .vpn-quickstart {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 1px;
+    background: #333;
+    border: 1px solid #333;
 }
 
 .step-card {
     display: flex;
-    gap: 16px;
-    background: var(--bg-base);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    transition: border-color 0.2s, transform 0.2s;
+    background: #0a0a0a;
+    padding: 24px;
+    gap: 24px;
+    transition: background 0.2s;
 }
 
 .step-card:hover {
-    border-color: rgba(0, 212, 255, 0.3);
-    transform: translateX(4px);
+    background: #111;
 }
 
 .step-card.highlight {
-    border-color: rgba(0, 255, 136, 0.3);
-    background: linear-gradient(135deg, rgba(0, 255, 136, 0.04), rgba(0, 212, 255, 0.04));
+    background: #111818;
 }
 
 .step-number {
-    min-width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 16px;
-    color: #0a0f1a;
-    flex-shrink: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    color: #00ffcc;
+    min-width: 40px;
 }
 
 .step-body h3 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
     font-size: 15px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin: 0 0 6px;
+    color: #fff;
+    margin: 0 0 12px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .step-body p {
-    font-family: 'Inter', sans-serif;
     font-size: 13px;
-    color: var(--text-secondary);
+    color: #999;
+    line-height: 1.6;
     margin: 0;
-    line-height: 1.5;
 }
 
-.step-body a {
-    color: var(--accent-cyan);
+.step-body a, .inline-link {
+    color: #00ffcc;
     text-decoration: none;
-}
-
-.step-body a:hover {
-    text-decoration: underline;
-}
-
-.step-body code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    background: rgba(0, 212, 255, 0.1);
-    color: var(--accent-cyan);
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-/* Code blocks with copy */
-.code-block {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #0a0f1a;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 14px;
-    margin-top: 10px;
-    overflow-x: auto;
-}
-
-.code-block code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--accent-green);
+    border-bottom: 1px solid #00ffcc;
+    padding-bottom: 1px;
     background: none;
-    padding: 0;
-    flex: 1;
-    word-break: break-all;
-    white-space: pre-wrap;
-}
-
-.code-block.agent-cmd {
-    border-color: rgba(0, 255, 136, 0.3);
-    background: linear-gradient(135deg, rgba(0, 255, 136, 0.06), #0a0f1a);
-}
-
-.copy-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    font-size: 12px;
-    padding: 4px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-.copy-btn:hover {
-    color: var(--accent-cyan);
-    border-color: var(--accent-cyan);
-}
-
-.copy-btn.copied {
-    color: var(--accent-green);
-    border-color: var(--accent-green);
-}
-
-.security-note {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-    padding: 8px 12px;
-    background: rgba(255, 183, 77, 0.08);
-    border: 1px solid rgba(255, 183, 77, 0.2);
-    border-radius: 8px;
-    font-size: 11px;
-    color: #ffb74d;
-    font-family: 'JetBrains Mono', monospace;
-}
-
-.inline-link {
-    background: none;
-    border: none;
-    color: var(--accent-cyan);
     cursor: pointer;
     font-family: inherit;
     font-size: inherit;
-    padding: 0;
-    text-decoration: underline;
 }
 
-/* Proxy setup */
+.step-body a:hover, .inline-link:hover {
+    background: rgba(0, 255, 204, 0.1);
+}
+
+.code-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #000;
+    border: 1px solid #333;
+    padding: 12px 16px;
+    margin-top: 16px;
+}
+
+.code-block code {
+    color: #e0e0e0;
+    font-size: 12px;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.code-block.agent-cmd code {
+    color: #00ffcc;
+}
+
+.copy-btn {
+    background: #222;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 6px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 12px;
+}
+
+.copy-btn:hover {
+    background: #333;
+}
+
+.copy-btn.copied {
+    background: #00ffcc;
+    color: #000;
+    border-color: #00ffcc;
+}
+
+.security-note {
+    margin-top: 16px;
+    padding: 12px;
+    background: #1a1a00;
+    border-left: 2px solid #ffcc00;
+    color: #ffcc00;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Proxy Setup Tabs */
 .platform-tabs {
     display: flex;
     gap: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .platform-tab {
+    background: #111;
+    border: 1px solid #333;
+    color: #888;
     padding: 10px 20px;
-    border: 1px solid var(--border);
-    background: var(--bg-base);
-    border-radius: 8px;
-    color: var(--text-muted);
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
-    transition: all 0.2s;
 }
 
 .platform-tab:hover {
-    border-color: rgba(0, 212, 255, 0.3);
-    color: var(--text-secondary);
+    color: #fff;
+    border-color: #555;
 }
 
 .platform-tab.active {
-    border-color: var(--accent-cyan);
-    color: var(--accent-cyan);
-    background: rgba(0, 212, 255, 0.08);
+    background: #fff;
+    color: #000;
+    border-color: #fff;
 }
 
 .setup-instructions {
-    background: var(--bg-base);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
+    border: 1px solid #333;
+    padding: 32px;
+    background: #050505;
 }
 
 .setup-instructions h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 16px;
-    color: var(--text-primary);
-    margin: 0 0 16px;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 0 0 20px 0;
 }
 
 .setup-steps {
-    padding-left: 20px;
-    margin: 0 0 16px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 .setup-steps li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #222;
+    color: #ccc;
+    font-size: 13px;
+}
+
+.setup-steps li::before {
+    content: '> ';
+    color: #00ffcc;
+}
+
+.terminal-alternative, .browser-setup {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #222;
+}
+
+.terminal-alternative h4, .chrome-note h4 {
     font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.8;
-    padding: 2px 0;
-}
-
-.setup-steps li::marker {
-    color: var(--accent-cyan);
-}
-
-.terminal-alternative {
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-}
-
-.terminal-alternative h4,
-.chrome-note h4 {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    color: var(--text-secondary);
-    margin: 0 0 8px;
-}
-
-.browser-setup {
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
+    color: #999;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
 }
 
 .chrome-note {
-    margin-top: 20px;
-    padding: 16px;
-    background: rgba(0, 212, 255, 0.04);
-    border: 1px solid rgba(0, 212, 255, 0.15);
-    border-radius: 8px;
+    margin-top: 32px;
+    background: #111;
+    padding: 20px;
+    border: 1px solid #222;
 }
 
 .chrome-note p {
     font-size: 13px;
-    color: var(--text-secondary);
+    color: #888;
     margin: 0;
     line-height: 1.5;
 }
 
-/* Status panel */
-.vpn-status-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
+/* Status Panel */
 .status-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px;
+    margin-bottom: 24px;
 }
 
 .status-card {
-    background: var(--bg-base);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    transition: border-color 0.2s;
-}
-
-.status-card:hover {
-    border-color: rgba(0, 212, 255, 0.3);
+    background: #050505;
+    border: 1px solid #333;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
 }
 
 .status-card-icon {
-    font-size: 28px;
-    margin-bottom: 8px;
+    font-size: 20px;
+    margin-bottom: 16px;
+    opacity: 0.5;
 }
 
 .status-card-value {
-    font-family: 'JetBrains Mono', monospace;
     font-size: 24px;
-    font-weight: 700;
-    color: var(--accent-cyan);
-    margin-bottom: 4px;
+    color: #fff;
+    margin-bottom: 8px;
     word-break: break-all;
 }
 
 .status-card-label {
-    font-family: 'Inter', sans-serif;
     font-size: 11px;
-    color: var(--text-muted);
+    color: #666;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+}
+
+.tunnel-list {
+    background: #050505;
+    border: 1px solid #333;
+    padding: 24px;
+    margin-bottom: 24px;
 }
 
 .tunnel-list h3 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
     font-size: 14px;
-    color: var(--text-primary);
-    margin: 0 0 12px;
+    text-transform: uppercase;
+    margin: 0 0 20px 0;
 }
 
 .tunnel-table {
     width: 100%;
     border-collapse: collapse;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
 }
 
 .tunnel-table th {
     text-align: left;
-    padding: 8px 12px;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border);
-    font-weight: 600;
+    padding: 12px;
+    background: #111;
+    color: #888;
+    font-size: 11px;
     text-transform: uppercase;
-    font-size: 10px;
-    letter-spacing: 0.5px;
+    border-bottom: 1px solid #333;
 }
 
 .tunnel-table td {
-    padding: 10px 12px;
-    color: var(--text-secondary);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 12px;
+    color: #ccc;
+    font-size: 13px;
+    border-bottom: 1px solid #222;
 }
 
 .tunnel-table .mono {
-    color: var(--accent-green);
+    color: #00ffcc;
 }
 
 .no-tunnels {
+    border: 1px dashed #444;
+    padding: 48px;
     text-align: center;
-    padding: 40px 20px;
-    color: var(--text-muted);
+    color: #666;
+    margin-bottom: 24px;
 }
 
 .no-tunnels-icon {
-    font-size: 48px;
-    margin-bottom: 12px;
-    opacity: 0.4;
-}
-
-.no-tunnels p {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    margin: 0 0 12px;
+    font-size: 32px;
+    margin-bottom: 16px;
 }
 
 .refresh-btn {
-    align-self: flex-start;
-    background: var(--bg-base);
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
-    font-family: 'Syne', sans-serif;
+    background: transparent;
+    border: 1px solid #555;
+    color: #fff;
+    padding: 10px 20px;
+    font-family: 'Inter', sans-serif;
     font-size: 12px;
-    padding: 8px 16px;
-    border-radius: 8px;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.2s;
 }
 
 .refresh-btn:hover {
-    border-color: var(--accent-cyan);
-    color: var(--accent-cyan);
+    background: #fff;
+    color: #000;
 }
 
-/* Architecture diagram */
+/* Architecture */
+.vpn-how {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
 .architecture-diagram {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    gap: 0;
-    padding: 32px 16px;
-    background: var(--bg-base);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 24px;
-    overflow-x: auto;
+    background: #050505;
+    border: 1px solid #333;
+    padding: 40px;
     flex-wrap: wrap;
+    gap: 16px;
 }
 
 .arch-node {
     text-align: center;
-    padding: 16px 12px;
     min-width: 100px;
 }
 
 .arch-icon {
-    font-size: 32px;
-    margin-bottom: 8px;
+    font-size: 24px;
+    margin-bottom: 12px;
 }
 
 .arch-label {
-    font-family: 'Syne', sans-serif;
+    color: #fff;
     font-size: 12px;
-    font-weight: 700;
-    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
     margin-bottom: 4px;
 }
 
 .arch-detail {
-    font-family: 'JetBrains Mono', monospace;
+    color: #666;
     font-size: 10px;
-    color: var(--text-muted);
 }
 
 .arch-arrow {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    padding: 0 4px;
+    gap: 8px;
 }
 
 .arch-arrow span {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    color: var(--text-muted);
-    white-space: nowrap;
+    font-size: 10px;
+    color: #888;
+    text-transform: uppercase;
 }
 
 .arrow-line {
-    width: 50px;
-    height: 2px;
-    background: var(--border);
+    width: 60px;
+    height: 1px;
+    background: #444;
     position: relative;
 }
 
 .arrow-line::after {
-    content: '→';
+    content: '>';
     position: absolute;
-    right: -8px;
+    right: -4px;
     top: -8px;
-    color: var(--text-muted);
-    font-size: 14px;
+    color: #444;
+    font-size: 12px;
+    font-family: monospace;
 }
 
 .arrow-line.encrypted {
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
-    box-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+    background: #00ffcc;
 }
 
 .arrow-line.encrypted::after {
-    color: var(--accent-green);
+    color: #00ffcc;
 }
 
-/* How it works cards */
 .how-details {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
+    gap: 1px;
+    background: #333;
+    border: 1px solid #333;
 }
 
 .how-card {
-    background: var(--bg-base);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    transition: border-color 0.2s, transform 0.2s;
-}
-
-.how-card:hover {
-    border-color: rgba(0, 212, 255, 0.3);
-    transform: translateY(-2px);
+    background: #0a0a0a;
+    padding: 32px;
 }
 
 .how-card h4 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
     font-size: 14px;
-    color: var(--text-primary);
-    margin: 0 0 8px;
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
 }
 
 .how-card p {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    color: var(--text-secondary);
-    margin: 0;
+    color: #999;
+    font-size: 13px;
     line-height: 1.6;
+    margin: 0;
 }
 
 .how-card strong {
-    color: var(--accent-cyan);
+    color: #00ffcc;
+    font-weight: normal;
 }
 
 @media (max-width: 768px) {
     .vpn-client-header {
         flex-direction: column;
-        align-items: flex-start;
     }
     .architecture-diagram {
         flex-direction: column;
+        padding: 24px;
     }
     .arch-arrow {
         transform: rotate(90deg);
-        padding: 8px 0;
+        padding: 16px 0;
     }
     .platform-tabs {
         flex-wrap: wrap;
