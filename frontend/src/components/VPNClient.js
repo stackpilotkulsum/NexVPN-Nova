@@ -94,7 +94,10 @@ function VPNClient({ token }) {
             {/* Header */}
             <div className="vpn-client-header">
                 <div className="vpn-client-title">
-                    <span className="vpn-icon">&gt;_</span>
+                    <div className="vpn-icon-wrapper">
+                        <span className="vpn-icon">⚡</span>
+                        <div className="vpn-icon-glow"></div>
+                    </div>
                     <div>
                         <h2>VPN Tunnel Client</h2>
                         <p className="vpn-subtitle">Real TCP tunneling via SOCKS5 → WebSocket</p>
@@ -111,10 +114,10 @@ function VPNClient({ token }) {
             {/* Navigation */}
             <div className="vpn-sections">
                 {[
-                    { id: 'quickstart', label: '01. Quick Start', },
-                    { id: 'setup', label: '02. Proxy Setup', },
-                    { id: 'status', label: '03. Live Status', },
-                    { id: 'how', label: '04. How It Works', },
+                    { id: 'quickstart', label: '🚀 Quick Start', },
+                    { id: 'setup', label: '⚙️ Proxy Setup', },
+                    { id: 'status', label: '📊 Live Status', },
+                    { id: 'how', label: '🔍 How It Works', },
                 ].map(sec => (
                     <button
                         key={sec.id}
@@ -309,7 +312,7 @@ function VPNClient({ token }) {
 
                         {(!tunnelStatus?.tunnels || tunnelStatus.tunnels.length === 0) && (
                             <div className="no-tunnels">
-                                <div className="no-tunnels-icon">[ ! ]</div>
+                                <div className="no-tunnels-icon">🔌</div>
                                 <p>No active tunnels. Start the local agent to see live data here.</p>
                                 <button className="inline-link" onClick={() => setActiveSection('quickstart')}>
                                     → Quick Start Guide
@@ -328,7 +331,7 @@ function VPNClient({ token }) {
                     <div className="vpn-how">
                         <div className="architecture-diagram">
                             <div className="arch-node client-node">
-                                <div className="arch-icon">[ C ]</div>
+                                <div className="arch-icon">💻</div>
                                 <div className="arch-label">Your Machine</div>
                                 <div className="arch-detail">Browser / Apps</div>
                             </div>
@@ -337,7 +340,7 @@ function VPNClient({ token }) {
                                 <div className="arrow-line" />
                             </div>
                             <div className="arch-node agent-node">
-                                <div className="arch-icon">[ A ]</div>
+                                <div className="arch-icon">⚡</div>
                                 <div className="arch-label">Local Agent</div>
                                 <div className="arch-detail">127.0.0.1:1080</div>
                             </div>
@@ -346,7 +349,7 @@ function VPNClient({ token }) {
                                 <div className="arrow-line encrypted" />
                             </div>
                             <div className="arch-node server-node">
-                                <div className="arch-icon">[ S ]</div>
+                                <div className="arch-icon">🛡️</div>
                                 <div className="arch-label">NEXVPN Server</div>
                                 <div className="arch-detail">Render Cloud</div>
                             </div>
@@ -355,7 +358,7 @@ function VPNClient({ token }) {
                                 <div className="arrow-line" />
                             </div>
                             <div className="arch-node dest-node">
-                                <div className="arch-icon">[ D ]</div>
+                                <div className="arch-icon">🌐</div>
                                 <div className="arch-label">Destination</div>
                                 <div className="arch-detail">google.com, etc.</div>
                             </div>
