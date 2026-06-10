@@ -58,13 +58,58 @@ function GeoSpoofVisualizer({ selectedServer, isConnected }) {
     const phaseRef = useRef(0);
 
     useEffect(() => {
-        // Fetch real location — try backend first, then direct ipapi.co fallback
+        // Fetch real location — try direct browser-based lookups first, then backend
         const fetchLocation = async () => {
             setLoading(true);
+            
+            // 1. Try ipapi.co directly from browser (most detailed client-side info)
+            try {
+                const r2 = await axios.get('https://ipapi.co/json/', { timeout: 5000 });
+                const d2 = r2.data;
+                const lat = parseFloat(d2.latitude);
+                const lon = parseFloat(d2.longitude);
+                if (!isNaN(lat) && !isNaN(lon)) {
+                    setRealLocation({
+                        ip: d2.ip,
+                        city: d2.city || 'Unknown',
+                        country: d2.country_name || 'Unknown',
+                        isp: d2.org || 'Unknown',
+                        latitude: lat,
+                        longitude: lon,
+                    });
+                    setLocationError(false);
+                    setLoading(false);
+                    return;
+                }
+            } catch (e2) {
+                console.log('Direct ipapi.co lookup failed, trying ip-api.com');
+            }
+
+            // 2. Try ip-api.com directly from browser (excellent free backup)
+            try {
+                const r3 = await axios.get('http://ip-api.com/json/?fields=status,country,countryCode,regionName,city,org,lat,lon,query', { timeout: 5000 });
+                const d3 = r3.data;
+                if (d3.status === 'success') {
+                    setRealLocation({
+                        ip: d3.query,
+                        city: d3.city || 'Unknown',
+                        country: d3.country || 'Unknown',
+                        isp: d3.org || 'Unknown',
+                        latitude: parseFloat(d3.lat),
+                        longitude: parseFloat(d3.lon),
+                    });
+                    setLocationError(false);
+                    setLoading(false);
+                    return;
+                }
+            } catch (e3) {
+                console.log('Direct ip-api.com lookup failed, trying backend');
+            }
+
+            // 3. Fallback: try backend public-ip API
             try {
                 const res = await axios.get(`${API_BASE}/network/public-ip`, { timeout: 8000 });
                 const d = res.data;
-                // Backend might return strings, parse to float
                 const lat = parseFloat(d.latitude);
                 const lon = parseFloat(d.longitude);
                 if (!isNaN(lat) && !isNaN(lon)) {
@@ -74,37 +119,16 @@ function GeoSpoofVisualizer({ selectedServer, isConnected }) {
                     throw new Error('No coordinates from backend');
                 }
             } catch (e) {
-                // Fallback: call ipapi.co directly from browser
-                try {
-                    const r2 = await axios.get('https://ipapi.co/json/', { timeout: 6000 });
-                    const d2 = r2.data;
-                    const lat = parseFloat(d2.latitude);
-                    const lon = parseFloat(d2.longitude);
-                    if (!isNaN(lat) && !isNaN(lon)) {
-                        setRealLocation({
-                            ip: d2.ip,
-                            city: d2.city || 'Unknown',
-                            country: d2.country_name || 'Unknown',
-                            isp: d2.org || 'Unknown',
-                            latitude: lat,
-                            longitude: lon,
-                        });
-                        setLocationError(false);
-                    } else {
-                        throw new Error('No coords');
-                    }
-                } catch (e2) {
-                    // Last resort: use a default location (India, since user is in Coimbatore)
-                    setRealLocation({
-                        ip: 'detecting...',
-                        city: 'Coimbatore',
-                        country: 'India',
-                        isp: 'Local ISP',
-                        latitude: 11.0168,
-                        longitude: 76.9558,
-                    });
-                    setLocationError(true);
-                }
+                // 4. Last resort: Coimbatore, India
+                setRealLocation({
+                    ip: 'detecting...',
+                    city: 'Coimbatore',
+                    country: 'India',
+                    isp: 'Local ISP',
+                    latitude: 11.0168,
+                    longitude: 76.9558,
+                });
+                setLocationError(true);
             }
             setLoading(false);
         };

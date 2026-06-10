@@ -38,9 +38,52 @@ export default function NetworkMonitor() {
     const [dnsLoading, setDnsLoading]       = useState(false);
     const intervalRef = useRef(null);
 
-    // ── Public IP ───────────────────────────────────────────────────────────
     const fetchPublicIP = useCallback(async () => {
         setIpLoading(true);
+
+        // 1. Try ipapi.co directly from browser (best detailed info)
+        try {
+            const r2 = await axios.get('https://ipapi.co/json/', { timeout: 5000 });
+            const d2 = r2.data;
+            setPublicIP({
+                ip:        d2.ip,
+                country:   d2.country_name || 'N/A',
+                city:      d2.city         || 'N/A',
+                region:    d2.region       || 'N/A',
+                isp:       d2.org          || 'N/A',
+                timezone:  d2.timezone     || 'N/A',
+                latitude:  d2.latitude  != null ? parseFloat(d2.latitude)  : null,
+                longitude: d2.longitude != null ? parseFloat(d2.longitude) : null,
+            });
+            setIpLoading(false);
+            return;
+        } catch {
+            console.log('Direct ipapi.co lookup failed, trying ip-api.com');
+        }
+
+        // 2. Try ip-api.com directly from browser (backup)
+        try {
+            const r3 = await axios.get('http://ip-api.com/json/?fields=status,country,countryCode,regionName,city,org,lat,lon,timezone,query', { timeout: 5000 });
+            const d3 = r3.data;
+            if (d3.status === 'success') {
+                setPublicIP({
+                    ip:        d3.query,
+                    country:   d3.country      || 'N/A',
+                    city:      d3.city         || 'N/A',
+                    region:    d3.regionName   || 'N/A',
+                    isp:       d3.org          || 'N/A',
+                    timezone:  d3.timezone     || 'N/A',
+                    latitude:  d3.lat  != null ? parseFloat(d3.lat)  : null,
+                    longitude: d3.lon  != null ? parseFloat(d3.lon)  : null,
+                });
+                setIpLoading(false);
+                return;
+            }
+        } catch {
+            console.log('Direct ip-api.com lookup failed, trying backend');
+        }
+
+        // 3. Fallback: Backend
         try {
             const res = await axios.get(`${API_BASE}/network/public-ip`, { timeout: 10000 });
             const d = res.data;
@@ -51,23 +94,7 @@ export default function NetworkMonitor() {
                 longitude: d.longitude != null ? parseFloat(d.longitude) : null,
             });
         } catch {
-            // Fallback: call ipapi.co directly from the browser
-            try {
-                const r2 = await axios.get('https://ipapi.co/json/', { timeout: 8000 });
-                const d2 = r2.data;
-                setPublicIP({
-                    ip:        d2.ip,
-                    country:   d2.country_name || 'N/A',
-                    city:      d2.city         || 'N/A',
-                    region:    d2.region       || 'N/A',
-                    isp:       d2.org          || 'N/A',
-                    timezone:  d2.timezone     || 'N/A',
-                    latitude:  d2.latitude  != null ? parseFloat(d2.latitude)  : null,
-                    longitude: d2.longitude != null ? parseFloat(d2.longitude) : null,
-                });
-            } catch {
-                setPublicIP({ ip: 'Unavailable', country: 'N/A', city: 'N/A', isp: 'N/A', timezone: 'N/A', region: 'N/A' });
-            }
+            setPublicIP({ ip: 'Unavailable', country: 'N/A', city: 'N/A', isp: 'N/A', timezone: 'N/A', region: 'N/A' });
         }
         setIpLoading(false);
     }, []);

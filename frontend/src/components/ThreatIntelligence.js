@@ -50,23 +50,62 @@ function ThreatIntelligence() {
         setScanning(true);
         setScanDone(false);
         setThreats([]);
+        
+        let ip = null;
+        let isp = 'Unknown';
+        
+        // 1. Try ipapi.co directly from browser
         try {
-            const res = await axios.get(`${API_BASE}/network/public-ip`);
-            setPublicIP(res.data.ip);
+            const r2 = await axios.get('https://ipapi.co/json/', { timeout: 5000 });
+            ip = r2.data.ip;
+            isp = r2.data.org || 'Unknown';
+        } catch {
+            console.log('Direct ipapi.co lookup failed, trying ip-api.com');
+        }
 
-            // Simulate threat analysis delay
-            await new Promise(r => setTimeout(r, 1500));
+        // 2. Try ip-api.com directly from browser if needed
+        if (!ip) {
+            try {
+                const r3 = await axios.get('http://ip-api.com/json/?fields=status,query,org', { timeout: 5000 });
+                if (r3.data.status === 'success') {
+                    ip = r3.data.query;
+                    isp = r3.data.org || 'Unknown';
+                }
+            } catch {
+                console.log('Direct ip-api.com lookup failed, trying backend');
+            }
+        }
 
+        // 3. Fallback: try backend
+        if (!ip) {
+            try {
+                const res = await axios.get(`${API_BASE}/network/public-ip`);
+                ip = res.data.ip;
+                isp = res.data.isp || 'Unknown';
+            } catch (e) {
+                setThreats([{ type: 'Scan Error', severity: 'error', description: e.message }]);
+                setScanning(false);
+                setScanDone(true);
+                return;
+            }
+        }
+
+        setPublicIP(ip);
+
+        // Simulate threat analysis delay
+        await new Promise(r => setTimeout(r, 1500));
+
+        try {
             // Real checks + simulated threat intel
             const foundThreats = [];
-            if (res.data.ip && res.data.ip !== 'unavailable') {
+            if (ip && ip !== 'unavailable') {
                 // Check if it looks like a datacenter IP (simplified heuristic)
-                const ipParts = res.data.ip.split('.');
+                const ipParts = ip.split('.');
                 if (ipParts[0] === '1' || ipParts[0] === '8' || ipParts[0] === '9') {
-                    foundThreats.push({ type: 'Public DNS/CDN Range', severity: 'info', description: `${res.data.ip} is in a well-known public IP range` });
+                    foundThreats.push({ type: 'Public DNS/CDN Range', severity: 'info', description: `${ip} is in a well-known public IP range` });
                 }
-                foundThreats.push({ type: 'IP Reputation', severity: 'low', description: `No known blacklists for ${res.data.ip}` });
-                foundThreats.push({ type: 'ISP Identification', severity: 'medium', description: `Your ISP (${res.data.isp || 'Unknown'}) can see your traffic without VPN` });
+                foundThreats.push({ type: 'IP Reputation', severity: 'low', description: `No known blacklists for ${ip}` });
+                foundThreats.push({ type: 'ISP Identification', severity: 'medium', description: `Your ISP (${isp}) can see your traffic without VPN` });
             }
             setThreats(foundThreats);
         } catch (e) {
