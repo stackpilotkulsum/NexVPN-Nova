@@ -58,11 +58,74 @@ function GeoSpoofVisualizer({ selectedServer, isConnected }) {
     const phaseRef = useRef(0);
 
     useEffect(() => {
-        // Fetch real location — try direct browser-based lookups first, then backend
+        // Fetch real location — try direct HTML5 Geolocation first (most accurate device GPS/Wi-Fi), then direct IP APIs, then backend
         const fetchLocation = async () => {
             setLoading(true);
             
-            // 1. Try ipapi.co directly from browser (most detailed client-side info)
+            // 1. Try browser HTML5 Geolocation (precise city/GPS coordinate lookup)
+            if (navigator.geolocation) {
+                try {
+                    const position = await new Promise((resolve, reject) => {
+                        navigator.geolocation.getCurrentPosition(resolve, reject, {
+                            enableHighAccuracy: true,
+                            timeout: 5000,
+                            maximumAge: 600000
+                        });
+                    });
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    
+                    if (!isNaN(lat) && !isNaN(lon)) {
+                        // Reverse geocode via OpenStreetMap's Nominatim (free, keyless) to get exact city
+                        let city = 'Your Location';
+                        let country = 'India';
+                        try {
+                            const revGeo = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`, {
+                                headers: { 'User-Agent': 'NexVPN-Client-App' },
+                                timeout: 4000
+                            });
+                            const addr = revGeo.data.address;
+                            city = addr.city || addr.town || addr.village || addr.suburb || addr.state_district || 'Your Location';
+                            country = addr.country || 'India';
+                        } catch (eGeo) {
+                            console.log('Reverse geocoding failed, using generic name');
+                        }
+
+                        // Try to get IP and ISP details in background
+                        let ipVal = 'detecting...';
+                        let ispVal = 'Local ISP';
+                        try {
+                            const ipRes = await axios.get('https://ipapi.co/json/', { timeout: 3000 });
+                            ipVal = ipRes.data.ip || ipVal;
+                            ispVal = ipRes.data.org || ispVal;
+                        } catch {
+                            try {
+                                const ipRes2 = await axios.get('http://ip-api.com/json/?fields=status,org,query', { timeout: 3000 });
+                                if (ipRes2.data.status === 'success') {
+                                    ipVal = ipRes2.data.query || ipVal;
+                                    ispVal = ipRes2.data.org || ispVal;
+                                }
+                            } catch {}
+                        }
+
+                        setRealLocation({
+                            ip: ipVal,
+                            city: city,
+                            country: country,
+                            isp: ispVal,
+                            latitude: lat,
+                            longitude: lon,
+                        });
+                        setLocationError(false);
+                        setLoading(false);
+                        return;
+                    }
+                } catch (geoError) {
+                    console.log('HTML5 Geolocation declined or failed:', geoError);
+                }
+            }
+
+            // 2. Try ipapi.co directly from browser (client-side IP lookup)
             try {
                 const r2 = await axios.get('https://ipapi.co/json/', { timeout: 5000 });
                 const d2 = r2.data;
@@ -85,7 +148,7 @@ function GeoSpoofVisualizer({ selectedServer, isConnected }) {
                 console.log('Direct ipapi.co lookup failed, trying ip-api.com');
             }
 
-            // 2. Try ip-api.com directly from browser (excellent free backup)
+            // 3. Try ip-api.com directly from browser
             try {
                 const r3 = await axios.get('http://ip-api.com/json/?fields=status,country,countryCode,regionName,city,org,lat,lon,query', { timeout: 5000 });
                 const d3 = r3.data;
@@ -106,7 +169,7 @@ function GeoSpoofVisualizer({ selectedServer, isConnected }) {
                 console.log('Direct ip-api.com lookup failed, trying backend');
             }
 
-            // 3. Fallback: try backend public-ip API
+            // 4. Fallback: try backend public-ip API
             try {
                 const res = await axios.get(`${API_BASE}/network/public-ip`, { timeout: 8000 });
                 const d = res.data;
@@ -119,7 +182,7 @@ function GeoSpoofVisualizer({ selectedServer, isConnected }) {
                     throw new Error('No coordinates from backend');
                 }
             } catch (e) {
-                // 4. Last resort: Coimbatore, India
+                // 5. Last resort fallback
                 setRealLocation({
                     ip: 'detecting...',
                     city: 'Coimbatore',

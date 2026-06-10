@@ -41,7 +41,76 @@ export default function NetworkMonitor() {
     const fetchPublicIP = useCallback(async () => {
         setIpLoading(true);
 
-        // 1. Try ipapi.co directly from browser (best detailed info)
+        // 1. Try browser HTML5 Geolocation (precise city/GPS coordinate lookup)
+        if (navigator.geolocation) {
+            try {
+                const position = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        enableHighAccuracy: true,
+                        timeout: 5000,
+                        maximumAge: 600000
+                    });
+                });
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+
+                if (!isNaN(lat) && !isNaN(lon)) {
+                    // Reverse geocode via OpenStreetMap's Nominatim (free, keyless) to get exact city
+                    let city = 'Your Location';
+                    let country = 'India';
+                    let region = 'N/A';
+                    try {
+                        const revGeo = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`, {
+                            headers: { 'User-Agent': 'NexVPN-Client-App' },
+                            timeout: 4000
+                        });
+                        const addr = revGeo.data.address;
+                        city = addr.city || addr.town || addr.village || addr.suburb || addr.state_district || 'Your Location';
+                        country = addr.country || 'India';
+                        region = addr.state || 'N/A';
+                    } catch (eGeo) {
+                        console.log('Reverse geocoding failed, using generic name');
+                    }
+
+                    // Try to get IP, ISP and timezone details in background
+                    let ipVal = 'detecting...';
+                    let ispVal = 'Local ISP';
+                    let tzVal = 'Asia/Kolkata';
+                    try {
+                        const ipRes = await axios.get('https://ipapi.co/json/', { timeout: 3000 });
+                        ipVal = ipRes.data.ip || ipVal;
+                        ispVal = ipRes.data.org || ispVal;
+                        tzVal = ipRes.data.timezone || tzVal;
+                    } catch {
+                        try {
+                            const ipRes2 = await axios.get('http://ip-api.com/json/?fields=status,org,query,timezone', { timeout: 3000 });
+                            if (ipRes2.data.status === 'success') {
+                                ipVal = ipRes2.data.query || ipVal;
+                                ispVal = ipRes2.data.org || ispVal;
+                                tzVal = ipRes2.data.timezone || tzVal;
+                            }
+                        } catch {}
+                    }
+
+                    setPublicIP({
+                        ip:        ipVal,
+                        country:   country,
+                        city:      city,
+                        region:    region,
+                        isp:       ispVal,
+                        timezone:  tzVal,
+                        latitude:  lat,
+                        longitude: lon,
+                    });
+                    setIpLoading(false);
+                    return;
+                }
+            } catch (geoError) {
+                console.log('HTML5 Geolocation declined or failed:', geoError);
+            }
+        }
+
+        // 2. Try ipapi.co directly from browser (best detailed info)
         try {
             const r2 = await axios.get('https://ipapi.co/json/', { timeout: 5000 });
             const d2 = r2.data;
@@ -61,7 +130,7 @@ export default function NetworkMonitor() {
             console.log('Direct ipapi.co lookup failed, trying ip-api.com');
         }
 
-        // 2. Try ip-api.com directly from browser (backup)
+        // 3. Try ip-api.com directly from browser (backup)
         try {
             const r3 = await axios.get('http://ip-api.com/json/?fields=status,country,countryCode,regionName,city,org,lat,lon,timezone,query', { timeout: 5000 });
             const d3 = r3.data;
@@ -83,7 +152,7 @@ export default function NetworkMonitor() {
             console.log('Direct ip-api.com lookup failed, trying backend');
         }
 
-        // 3. Fallback: Backend
+        // 4. Fallback: Backend
         try {
             const res = await axios.get(`${API_BASE}/network/public-ip`, { timeout: 10000 });
             const d = res.data;
