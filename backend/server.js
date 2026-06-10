@@ -382,6 +382,16 @@ app.get('/api/network/public-ip', async (req, res) => {
     }
 });
 
+app.get('/api/network/debug-ip', (req, res) => {
+    res.json({
+        headers: req.headers,
+        remoteAddress: req.socket.remoteAddress,
+        ip: req.ip,
+        clientIp: getClientIP(req),
+        isPrivate: isPrivateIP(getClientIP(req))
+    });
+});
+
 app.get('/api/network/system-info', (req, res) => {
     const net = getSystemNetworkStats();
     res.json({
