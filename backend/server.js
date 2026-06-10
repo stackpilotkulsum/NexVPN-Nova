@@ -13,6 +13,7 @@ const https = require('https');
 require('dotenv').config();
 
 const app = express();
+app.set('trust proxy', true);
 const server = http.createServer(app);
 
 // Enable CORS for all origins for initial deployment
@@ -113,6 +114,54 @@ function getPublicIP() {
         req.on('error', () => resolve(null));
         req.on('timeout', () => { req.destroy(); resolve(null); });
     });
+}
+
+// Get client's public IP from the request, checking reverse proxy headers first
+function getClientIP(req) {
+    let ip = req.headers['x-forwarded-for'];
+    if (ip) {
+        if (ip.includes(',')) {
+            ip = ip.split(',')[0].trim();
+        }
+        return ip;
+    }
+    const headers = [
+        'x-real-ip',
+        'cf-connecting-ip',
+        'fastly-client-ip',
+        'x-cluster-client-ip'
+    ];
+    for (const h of headers) {
+        if (req.headers[h]) {
+            return req.headers[h];
+        }
+    }
+    return req.ip || req.socket.remoteAddress || req.connection?.remoteAddress;
+}
+
+// Check if an IP address is a private/local IP (like 127.0.0.1 or ::1)
+function isPrivateIP(ip) {
+    if (!ip) return true;
+    let normalized = ip.trim();
+    if (normalized.startsWith('::ffff:')) {
+        normalized = normalized.substring(7);
+    }
+    if (normalized === '::1' || normalized === '127.0.0.1' || normalized === 'localhost') {
+        return true;
+    }
+    const parts = normalized.split('.');
+    if (parts.length === 4) {
+        const first = parseInt(parts[0], 10);
+        const second = parseInt(parts[1], 10);
+        if (first === 10) return true;
+        if (first === 192 && second === 168) return true;
+        if (first === 172 && (second >= 16 && second <= 31)) return true;
+        if (first === 169 && second === 254) return true;
+    }
+    if (normalized.startsWith('fe80:') || normalized.startsWith('fc00:') || normalized.startsWith('fd00:')) {
+        return true;
+    }
+    return false;
 }
 
 // Try multiple geo APIs for redundancy
@@ -303,8 +352,19 @@ function verifyToken(t) {
 // ===== NETWORK ENDPOINTS =====
 app.get('/api/network/public-ip', async (req, res) => {
     try {
-        const ip = await getPublicIP();
-        if (!ip) return res.json({ ip: 'unavailable', country: 'N/A', city: 'N/A', isp: 'N/A', timezone: 'N/A', region: 'N/A' });
+        let ip = getClientIP(req);
+        // If the client IP is local/private, fall back to the server's public IP
+        if (isPrivateIP(ip)) {
+            const serverPublicIP = await getPublicIP();
+            if (serverPublicIP) {
+                ip = serverPublicIP;
+            }
+        }
+
+        if (!ip || isPrivateIP(ip)) {
+            return res.json({ ip: 'unavailable', country: 'N/A', city: 'N/A', isp: 'N/A', timezone: 'N/A', region: 'N/A' });
+        }
+
         const geo = await getIPGeoLocation(ip);
         res.json({
             ip,
