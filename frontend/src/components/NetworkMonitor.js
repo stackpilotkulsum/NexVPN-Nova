@@ -266,22 +266,48 @@ export default function NetworkMonitor() {
                         <div className="spinner"></div> Detecting your IP and location...
                     </div>
                 ) : publicIP ? (
-                    <div className="ip-info-grid">
-                        {[
-                            { label: 'Public IP',    value: publicIP.ip,       large: true },
-                            { label: 'Location',     value: [publicIP.city, publicIP.country].filter(Boolean).join(', ') || 'N/A' },
-                            { label: 'ISP',          value: publicIP.isp      || 'N/A' },
-                            { label: 'Region',       value: publicIP.region   || 'N/A' },
-                            { label: 'Timezone',     value: publicIP.timezone || 'N/A' },
-                            { label: 'Coordinates',  value: publicIP.latitude != null ? `${publicIP.latitude.toFixed(4)}, ${publicIP.longitude?.toFixed(4)}` : 'N/A' },
-                        ].map((item, i) => (
-                            <div key={i} className={`ip-info-card${i === 0 ? ' main-ip' : ''}`}>
-                                <div className="ip-label">{item.label}</div>
-                                <div className="ip-value" style={item.large ? { fontSize:'1.3rem', fontFamily:'monospace' } : {}}>
-                                    {item.value}
+                    <div>
+                        <div className="ip-info-grid">
+                            {[
+                                { label: 'Public IP',    value: publicIP.ip,       large: true },
+                                { label: 'Location',     value: [publicIP.city, publicIP.country].filter(Boolean).join(', ') || 'N/A' },
+                                { label: 'ISP',          value: publicIP.isp      || 'N/A' },
+                                { label: 'Region',       value: publicIP.region   || 'N/A' },
+                                { label: 'Timezone',     value: publicIP.timezone || 'N/A' },
+                                { label: 'Coordinates',  value: publicIP.latitude != null ? `${publicIP.latitude.toFixed(4)}, ${publicIP.longitude?.toFixed(4)}` : 'N/A' },
+                                { label: 'Accuracy',     value: publicIP.accuracy === 'gps' ? '📍 GPS / Wi-Fi (Precise)' : '🌐 IP Geolocation (Approximate)' }
+                            ].map((item, i) => (
+                                <div key={i} className={`ip-info-card${i === 0 ? ' main-ip' : ''}`}>
+                                    <div className="ip-label">{item.label}</div>
+                                    <div className="ip-value" style={item.large ? { fontSize:'1.3rem', fontFamily:'monospace' } : {}}>
+                                        {item.value}
+                                    </div>
                                 </div>
+                            ))}
+                        </div>
+                        {publicIP.accuracy !== 'gps' && (
+                            <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'flex-start' }}>
+                                <button
+                                    onClick={fetchPublicIP}
+                                    style={{
+                                        fontFamily: 'JetBrains Mono',
+                                        fontSize: '11px',
+                                        padding: '8px 14px',
+                                        borderRadius: '6px',
+                                        background: 'rgba(255,51,102,0.1)',
+                                        border: '1px solid var(--danger)',
+                                        color: 'var(--danger)',
+                                        cursor: 'pointer',
+                                        fontWeight: '700',
+                                        transition: 'all 0.2s ease'
+                                    }}
+                                    onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(255,51,102,0.2)'; }}
+                                    onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(255,51,102,0.1)'; }}
+                                >
+                                    🎯 Pinpoint Exact Location (Request Browser GPS/Wi-Fi Permission)
+                                </button>
                             </div>
-                        ))}
+                        )}
                     </div>
                 ) : null}
             </Section>
