@@ -126,8 +126,9 @@ function getClientIP(req) {
         return ip;
     }
     const headers = [
-        'x-real-ip',
+        'true-client-ip',
         'cf-connecting-ip',
+        'x-real-ip',
         'fastly-client-ip',
         'x-cluster-client-ip'
     ];
