@@ -12,6 +12,7 @@ import PrivacyScore from '../components/PrivacyScore';
 import ThreatIntelligence from '../components/ThreatIntelligence';
 import WebRTCLeakDetector from '../components/WebRTCLeakDetector';
 import GeoSpoofVisualizer from '../components/GeoSpoofVisualizer';
+import VPNClient from '../components/VPNClient';
 import { connectSocket, disconnectSocket, getSocket } from '../utils/socket';
 import './Dashboard.css';
 
@@ -27,6 +28,7 @@ const TABS = [
     { id: 'monitor',  label: '📡 Network' },
     { id: 'chat',     label: '💬 Chat' },
     { id: 'logs',     label: '📋 Logs' },
+    { id: 'tunnel',   label: '🔌 VPN Client' },
 ];
 
 function Dashboard() {
@@ -264,6 +266,9 @@ function Dashboard() {
                             selectedServer={selectedServer}
                             selectedProtocol={selectedProtocol}
                         />
+                    )}
+                    {activeTab === 'tunnel'  && (
+                        <VPNClient token={token} />
                     )}
                 </div>
             </div>

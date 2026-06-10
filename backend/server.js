@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const cors = require('cors');
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
+const WebSocket = require('ws');
 const net = require('net');
 const dns = require('dns').promises;
 const os = require('os');
@@ -655,6 +656,134 @@ io.on('connection', (socket) => {
     });
 });
 
+// ===== WEBSOCKET TCP TUNNEL (Real VPN) =====
+const tunnelWss = new WebSocket.Server({ noServer: true });
+const activeTunnels = new Map(); // track active tunnel connections
+
+// Handle HTTP upgrade: route /tunnel to our WS server, everything else to Socket.IO
+server.on('upgrade', (request, socket, head) => {
+    const url = new URL(request.url, `http://${request.headers.host}`);
+    if (url.pathname === '/tunnel') {
+        tunnelWss.handleUpgrade(request, socket, head, (ws) => {
+            tunnelWss.emit('connection', ws, request);
+        });
+    }
+    // Socket.IO handles its own upgrades via the 'upgrade' event it registered
+});
+
+tunnelWss.on('connection', (ws, req) => {
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const token = url.searchParams.get('token');
+    const targetHost = url.searchParams.get('host');
+    const targetPort = parseInt(url.searchParams.get('port') || '0', 10);
+
+    // Authenticate
+    const decoded = verifyToken(token);
+    if (!decoded) {
+        ws.close(4001, 'Unauthorized');
+        return;
+    }
+
+    if (!targetHost || !targetPort || targetPort < 1 || targetPort > 65535) {
+        ws.close(4002, 'Invalid target');
+        return;
+    }
+
+    // Block connections to private/internal IPs to prevent SSRF
+    if (isPrivateIP(targetHost)) {
+        ws.close(4003, 'Private addresses not allowed');
+        return;
+    }
+
+    const tunnelId = uuidv4();
+    let bytesUp = 0, bytesDown = 0;
+
+    // Create TCP connection to the target
+    const tcpSocket = new net.Socket();
+    tcpSocket.setTimeout(30000);
+
+    tcpSocket.connect(targetPort, targetHost, () => {
+        activeTunnels.set(tunnelId, {
+            userId: decoded.userId,
+            target: `${targetHost}:${targetPort}`,
+            startedAt: Date.now()
+        });
+        ws.send(JSON.stringify({ type: 'connected', tunnelId }));
+
+        // Track traffic
+        const stats = trafficStats.get(decoded.userId);
+        if (stats) stats.recordSent(0); // mark connection start
+    });
+
+    // TCP -> WebSocket (downstream data to client)
+    tcpSocket.on('data', (chunk) => {
+        if (ws.readyState === WebSocket.OPEN) {
+            bytesDown += chunk.length;
+            ws.send(chunk);
+            const stats = trafficStats.get(decoded.userId);
+            if (stats) stats.recordReceived(chunk.length);
+        }
+    });
+
+    // WebSocket -> TCP (upstream data from client)
+    ws.on('message', (data) => {
+        // Skip JSON control messages
+        if (typeof data === 'string') return;
+        if (tcpSocket.writable) {
+            bytesUp += data.length;
+            tcpSocket.write(data);
+            const stats = trafficStats.get(decoded.userId);
+            if (stats) stats.recordSent(data.length);
+        }
+    });
+
+    // Cleanup on close from either side
+    const cleanup = (source) => {
+        activeTunnels.delete(tunnelId);
+        if (!tcpSocket.destroyed) tcpSocket.destroy();
+        if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
+            ws.close(1000, `Closed by ${source}`);
+        }
+        // Log the tunnel session
+        if (!connectionLogs.has(decoded.userId)) connectionLogs.set(decoded.userId, []);
+        connectionLogs.get(decoded.userId).push({
+            action: 'tunnel_closed',
+            tunnelId,
+            target: `${targetHost}:${targetPort}`,
+            bytesUp,
+            bytesDown,
+            source,
+            timestamp: Date.now()
+        });
+    };
+
+    tcpSocket.on('close', () => cleanup('target'));
+    tcpSocket.on('error', (err) => {
+        if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({ type: 'error', message: err.message }));
+        }
+        cleanup('tcp_error');
+    });
+    tcpSocket.on('timeout', () => {
+        if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({ type: 'error', message: 'TCP timeout' }));
+        }
+        cleanup('timeout');
+    });
+
+    ws.on('close', () => cleanup('client'));
+    ws.on('error', () => cleanup('ws_error'));
+});
+
+// API endpoint to check active tunnels
+app.get('/api/tunnel/status', (req, res) => {
+    const token = req.headers.authorization;
+    const decoded = verifyToken(token);
+    if (!decoded) return res.status(401).json({ error: 'Unauthorized' });
+    const userTunnels = Array.from(activeTunnels.values()).filter(t => t.userId === decoded.userId);
+    res.json({ activeTunnels: userTunnels.length, tunnels: userTunnels });
+});
+
 server.on('error', (err) => {
     if (err.code === 'EADDRINUSE') {
         console.error(`\n❌ Port ${PORT} is already in use!`);
@@ -670,7 +799,8 @@ server.on('error', (err) => {
 
 server.listen(PORT, () => {
     console.log('\n✅ NEXVPN Backend running!');
-    console.log(`   → API:    http://localhost:${PORT}/api`);
-    console.log(`   → Socket: http://localhost:${PORT}`);
-    console.log(`   → Health: http://localhost:${PORT}/api/health\n`);
+    console.log(`   → API:      http://localhost:${PORT}/api`);
+    console.log(`   → Socket:   http://localhost:${PORT}`);
+    console.log(`   → Tunnel:   ws://localhost:${PORT}/tunnel`);
+    console.log(`   → Health:   http://localhost:${PORT}/api/health\n`);
 });

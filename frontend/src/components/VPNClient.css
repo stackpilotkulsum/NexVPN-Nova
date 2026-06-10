@@ -1,0 +1,612 @@
+.vpn-client {
+    animation: fadeIn 0.3s ease;
+}
+
+.vpn-client-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.vpn-client-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.vpn-icon {
+    font-size: 28px;
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+}
+
+.vpn-client-title h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00d4ff, #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+.vpn-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin: 2px 0 0 0;
+}
+
+.tunnel-status-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+}
+
+.tunnel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    transition: all 0.3s;
+}
+
+.tunnel-dot.active {
+    background: #00ff88;
+    box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+    animation: pulseDot 2s ease infinite;
+}
+
+/* Section nav */
+.vpn-sections {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    background: var(--bg-base);
+    border-radius: 10px;
+    padding: 4px;
+    border: 1px solid var(--border);
+}
+
+.vpn-section-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 10px 16px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.vpn-section-btn:hover {
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.vpn-section-btn.active {
+    color: var(--accent-cyan);
+    background: var(--bg-card);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Quick start steps */
+.vpn-quickstart {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.step-card {
+    display: flex;
+    gap: 16px;
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.step-card:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateX(4px);
+}
+
+.step-card.highlight {
+    border-color: rgba(0, 255, 136, 0.3);
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.04), rgba(0, 212, 255, 0.04));
+}
+
+.step-number {
+    min-width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    color: #0a0f1a;
+    flex-shrink: 0;
+}
+
+.step-body h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 6px;
+}
+
+.step-body p {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.step-body a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+}
+
+.step-body a:hover {
+    text-decoration: underline;
+}
+
+.step-body code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--accent-cyan);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* Code blocks with copy */
+.code-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #0a0f1a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    overflow-x: auto;
+}
+
+.code-block code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent-green);
+    background: none;
+    padding: 0;
+    flex: 1;
+    word-break: break-all;
+    white-space: pre-wrap;
+}
+
+.code-block.agent-cmd {
+    border-color: rgba(0, 255, 136, 0.3);
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.06), #0a0f1a);
+}
+
+.copy-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.copy-btn:hover {
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+}
+
+.copy-btn.copied {
+    color: var(--accent-green);
+    border-color: var(--accent-green);
+}
+
+.security-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: rgba(255, 183, 77, 0.08);
+    border: 1px solid rgba(255, 183, 77, 0.2);
+    border-radius: 8px;
+    font-size: 11px;
+    color: #ffb74d;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.inline-link {
+    background: none;
+    border: none;
+    color: var(--accent-cyan);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+    text-decoration: underline;
+}
+
+/* Proxy setup */
+.platform-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.platform-tab {
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    background: var(--bg-base);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.platform-tab:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    color: var(--text-secondary);
+}
+
+.platform-tab.active {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    background: rgba(0, 212, 255, 0.08);
+}
+
+.setup-instructions {
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.setup-instructions h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    color: var(--text-primary);
+    margin: 0 0 16px;
+}
+
+.setup-steps {
+    padding-left: 20px;
+    margin: 0 0 16px;
+}
+
+.setup-steps li {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    padding: 2px 0;
+}
+
+.setup-steps li::marker {
+    color: var(--accent-cyan);
+}
+
+.terminal-alternative {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.terminal-alternative h4,
+.chrome-note h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0 0 8px;
+}
+
+.browser-setup {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.chrome-note {
+    margin-top: 20px;
+    padding: 16px;
+    background: rgba(0, 212, 255, 0.04);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 8px;
+}
+
+.chrome-note p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Status panel */
+.vpn-status-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.status-card {
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: border-color 0.2s;
+}
+
+.status-card:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+}
+
+.status-card-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.status-card-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: 4px;
+    word-break: break-all;
+}
+
+.status-card-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tunnel-list h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+    margin: 0 0 12px;
+}
+
+.tunnel-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+}
+
+.tunnel-table th {
+    text-align: left;
+    padding: 8px 12px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+}
+
+.tunnel-table td {
+    padding: 10px 12px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.tunnel-table .mono {
+    color: var(--accent-green);
+}
+
+.no-tunnels {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+}
+
+.no-tunnels-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    opacity: 0.4;
+}
+
+.no-tunnels p {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    margin: 0 0 12px;
+}
+
+.refresh-btn {
+    align-self: flex-start;
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.refresh-btn:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+}
+
+/* Architecture diagram */
+.architecture-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 32px 16px;
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    flex-wrap: wrap;
+}
+
+.arch-node {
+    text-align: center;
+    padding: 16px 12px;
+    min-width: 100px;
+}
+
+.arch-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.arch-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.arch-detail {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.arch-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 0 4px;
+}
+
+.arch-arrow span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.arrow-line {
+    width: 50px;
+    height: 2px;
+    background: var(--border);
+    position: relative;
+}
+
+.arrow-line::after {
+    content: '→';
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.arrow-line.encrypted {
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+}
+
+.arrow-line.encrypted::after {
+    color: var(--accent-green);
+}
+
+/* How it works cards */
+.how-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.how-card {
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.how-card:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.how-card h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+    margin: 0 0 8px;
+}
+
+.how-card p {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.how-card strong {
+    color: var(--accent-cyan);
+}
+
+@media (max-width: 768px) {
+    .vpn-client-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .architecture-diagram {
+        flex-direction: column;
+    }
+    .arch-arrow {
+        transform: rotate(90deg);
+        padding: 8px 0;
+    }
+    .platform-tabs {
+        flex-wrap: wrap;
+    }
+}
