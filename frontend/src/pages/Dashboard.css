@@ -91,7 +91,7 @@
     position: relative;
     letter-spacing: 0.3px;
 }
-.tab-btn:hover { color: var(--text-secondary); background: rgba(255,255,255,0.02); }
+.tab-btn:hover { color: var(--text-secondary); background: var(--bg-elevated); }
 .tab-btn.active {
     color: var(--accent-cyan);
     background: var(--bg-card);

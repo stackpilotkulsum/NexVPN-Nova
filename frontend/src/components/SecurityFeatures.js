@@ -96,8 +96,8 @@ function SecurityFeatures({ token, onSettingsChange }) {
                 <div style={{
                     position: 'absolute', top: '4px', left: '50%', transform: 'translateX(-50%)',
                     width: '16px', height: '16px',
-                    border: '2px solid rgba(255,255,255,0.3)',
-                    borderTopColor: '#fff',
+                    border: '2px solid var(--border-glow)',
+                    borderTopColor: 'var(--primary)',
                     borderRadius: '50%',
                     animation: 'spin 0.8s linear infinite',
                 }} />
@@ -106,7 +106,7 @@ function SecurityFeatures({ token, onSettingsChange }) {
                     position: 'absolute', top: '4px',
                     left: enabled ? '24px' : '4px',
                     width: '16px', height: '16px', borderRadius: '50%',
-                    background: enabled ? '#000' : 'var(--text-muted)',
+                    background: enabled ? 'var(--bg-card)' : 'var(--text-muted)',
                     transition: 'left 0.3s ease',
                 }} />
             )}

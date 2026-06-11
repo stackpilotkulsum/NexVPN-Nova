@@ -24,17 +24,14 @@
 
 .vpn-icon {
     font-size: 28px;
-    filter: drop-shadow(0 0 12px rgba(112, 0, 255, 0.6));
+    filter: drop-shadow(0 0 12px var(--glow-cyan));
 }
 
 .vpn-client-title h2 {
     font-family: 'Syne', sans-serif;
     font-size: 24px;
     font-weight: 800;
-    /* Improved Color: Rich Aurora Gradient */
-    background: linear-gradient(135deg, #00d4ff, #bc13fe);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-primary);
     margin: 0;
     letter-spacing: -0.5px;
 }
@@ -42,7 +39,7 @@
 .vpn-subtitle {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    color: #a1a1aa; /* Softer muted text */
+    color: var(--text-muted);
     margin: 2px 0 0 0;
 }
 
@@ -52,32 +49,32 @@
     gap: 8px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    color: #e4e4e7;
-    background: rgba(24, 24, 27, 0.8);
-    border: 1px solid rgba(188, 19, 254, 0.3);
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 20px;
     padding: 6px 14px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px var(--shadow);
 }
 
 .tunnel-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #52525b;
+    background: var(--text-muted);
     transition: all 0.3s;
 }
 
 .tunnel-dot.active {
-    background: #00ff88;
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.8), 0 0 20px rgba(0, 255, 136, 0.4);
+    background: var(--success);
+    box-shadow: 0 0 10px var(--glow-green);
     animation: pulseDot 2s ease infinite;
 }
 
 @keyframes pulseDot {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(0, 255, 136, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 var(--glow-green); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(0,0,0,0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0,0,0,0); }
 }
 
 /* Section nav */
@@ -87,10 +84,10 @@
     margin-bottom: 24px;
     overflow-x: auto;
     scrollbar-width: thin;
-    background: rgba(9, 9, 11, 0.6);
+    background: var(--bg-base);
     border-radius: 12px;
     padding: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
 }
 
 .vpn-section-btn {
@@ -99,7 +96,7 @@
     padding: 10px 16px;
     border: none;
     background: transparent;
-    color: #a1a1aa;
+    color: var(--text-secondary);
     font-family: 'Syne', sans-serif;
     font-size: 13px;
     font-weight: 600;
@@ -110,15 +107,14 @@
 }
 
 .vpn-section-btn:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    background: var(--bg-elevated);
 }
 
 .vpn-section-btn.active {
-    color: #fff;
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(188, 19, 254, 0.15));
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(188, 19, 254, 0.3);
+    color: var(--bg-deep);
+    background: var(--primary);
+    box-shadow: 0 4px 12px var(--shadow);
 }
 
 /* Quick start steps */
@@ -131,40 +127,37 @@
 .step-card {
     display: flex;
     gap: 16px;
-    background: rgba(24, 24, 27, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 14px;
     padding: 22px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
 }
 
 .step-card:hover {
-    border-color: rgba(0, 212, 255, 0.4);
+    border-color: var(--primary);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 24px var(--shadow);
 }
 
 .step-card.highlight {
-    border-color: rgba(188, 19, 254, 0.4);
-    background: linear-gradient(135deg, rgba(188, 19, 254, 0.05), rgba(0, 212, 255, 0.05));
-    box-shadow: inset 0 0 20px rgba(188, 19, 254, 0.05);
+    border-color: var(--secondary);
+    background: var(--bg-elevated);
 }
 
 .step-number {
     min-width: 40px;
     height: 40px;
     border-radius: 50%;
-    /* Improved Color */
-    background: linear-gradient(135deg, #00d4ff, #bc13fe);
+    background: var(--bg-elevated);
+    border: 2px solid var(--primary);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Syne', sans-serif;
     font-weight: 800;
     font-size: 18px;
-    color: #ffffff;
-    box-shadow: 0 4px 12px rgba(188, 19, 254, 0.4);
+    color: var(--primary);
     flex-shrink: 0;
 }
 
@@ -172,36 +165,37 @@
     font-family: 'Syne', sans-serif;
     font-size: 16px;
     font-weight: 700;
-    color: #f4f4f5;
+    color: var(--text-primary);
     margin: 0 0 6px;
 }
 
 .step-body p {
     font-family: 'Inter', sans-serif;
     font-size: 13px;
-    color: #a1a1aa;
+    color: var(--text-secondary);
     margin: 0;
     line-height: 1.6;
 }
 
 .step-body a {
-    color: #00d4ff;
+    color: var(--primary);
     text-decoration: none;
     font-weight: 500;
 }
 
 .step-body a:hover {
     text-decoration: underline;
-    color: #bc13fe;
+    color: var(--secondary);
 }
 
 .step-body code {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    background: rgba(0, 212, 255, 0.1);
-    color: #00d4ff;
+    background: var(--bg-base);
+    color: var(--primary);
     padding: 2px 6px;
     border-radius: 4px;
+    border: 1px solid var(--border);
 }
 
 /* Code blocks with copy */
@@ -209,38 +203,38 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: rgba(9, 9, 11, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
     border-radius: 8px;
     padding: 12px 16px;
     margin-top: 12px;
     overflow-x: auto;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .code-block code {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    color: #00ff88; /* Cyber green */
+    color: var(--text-primary);
     background: none;
     padding: 0;
     flex: 1;
     word-break: break-all;
     white-space: pre-wrap;
+    border: none;
 }
 
 .code-block.agent-cmd {
-    border-color: rgba(188, 19, 254, 0.3);
-    background: linear-gradient(135deg, rgba(188, 19, 254, 0.05), rgba(9, 9, 11, 0.9));
+    border-color: var(--secondary);
+    background: var(--bg-elevated);
 }
 .code-block.agent-cmd code {
-    color: #00d4ff;
+    color: var(--secondary);
 }
 
 .copy-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #a1a1aa;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
     font-size: 12px;
     padding: 6px 12px;
     border-radius: 6px;
@@ -253,16 +247,15 @@
 }
 
 .copy-btn:hover {
-    color: #fff;
-    background: rgba(0, 212, 255, 0.2);
-    border-color: #00d4ff;
+    color: var(--text-primary);
+    background: var(--bg-elevated);
+    border-color: var(--primary);
 }
 
 .copy-btn.copied {
-    color: #000;
-    background: #00ff88;
-    border-color: #00ff88;
-    box-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
+    color: var(--bg-deep);
+    background: var(--success);
+    border-color: var(--success);
 }
 
 .security-note {
@@ -271,18 +264,18 @@
     gap: 10px;
     margin-top: 12px;
     padding: 10px 14px;
-    background: rgba(255, 183, 77, 0.05);
-    border: 1px solid rgba(255, 183, 77, 0.2);
+    background: rgba(209, 138, 88, 0.1);
+    border: 1px solid var(--warning);
     border-radius: 8px;
     font-size: 12px;
-    color: #ffb74d;
+    color: var(--warning);
     font-family: 'JetBrains Mono', monospace;
 }
 
 .inline-link {
     background: none;
     border: none;
-    color: #00d4ff;
+    color: var(--primary);
     cursor: pointer;
     font-family: inherit;
     font-size: inherit;
@@ -299,10 +292,10 @@
 
 .platform-tab {
     padding: 10px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(24, 24, 27, 0.6);
+    border: 1px solid var(--border);
+    background: var(--bg-base);
     border-radius: 8px;
-    color: #a1a1aa;
+    color: var(--text-secondary);
     font-family: 'Syne', sans-serif;
     font-weight: 600;
     font-size: 13px;
@@ -311,29 +304,27 @@
 }
 
 .platform-tab:hover {
-    border-color: rgba(0, 212, 255, 0.4);
-    color: #fff;
+    border-color: var(--primary);
+    color: var(--text-primary);
 }
 
 .platform-tab.active {
-    border-color: #00d4ff;
-    color: #fff;
-    background: rgba(0, 212, 255, 0.15);
-    box-shadow: 0 4px 12px rgba(0, 212, 255, 0.2);
+    border-color: var(--primary);
+    color: var(--bg-deep);
+    background: var(--primary);
 }
 
 .setup-instructions {
-    background: rgba(24, 24, 27, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 14px;
     padding: 24px;
-    backdrop-filter: blur(10px);
 }
 
 .setup-instructions h3 {
     font-family: 'Syne', sans-serif;
     font-size: 16px;
-    color: #f4f4f5;
+    color: var(--text-primary);
     margin: 0 0 16px;
 }
 
@@ -345,46 +336,46 @@
 .setup-steps li {
     font-family: 'Inter', sans-serif;
     font-size: 13px;
-    color: #d4d4d8;
+    color: var(--text-secondary);
     line-height: 1.8;
     padding: 2px 0;
 }
 
 .setup-steps li::marker {
-    color: #00d4ff;
+    color: var(--primary);
 }
 
 .terminal-alternative {
     margin-top: 16px;
     padding-top: 16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--border);
 }
 
 .terminal-alternative h4,
 .chrome-note h4 {
     font-family: 'Syne', sans-serif;
     font-size: 13px;
-    color: #a1a1aa;
+    color: var(--text-muted);
     margin: 0 0 8px;
 }
 
 .browser-setup {
     margin-top: 24px;
     padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--border);
 }
 
 .chrome-note {
     margin-top: 20px;
     padding: 16px;
-    background: rgba(0, 212, 255, 0.04);
-    border: 1px solid rgba(0, 212, 255, 0.15);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
     border-radius: 8px;
 }
 
 .chrome-note p {
     font-size: 13px;
-    color: #d4d4d8;
+    color: var(--text-secondary);
     margin: 0;
     line-height: 1.5;
 }
@@ -403,34 +394,30 @@
 }
 
 .status-card {
-    background: rgba(24, 24, 27, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 14px;
     padding: 24px;
     text-align: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
 }
 
 .status-card:hover {
-    border-color: rgba(188, 19, 254, 0.4);
+    border-color: var(--secondary);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 24px var(--shadow);
 }
 
 .status-card-icon {
     font-size: 28px;
     margin-bottom: 12px;
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
 }
 
 .status-card-value {
     font-family: 'JetBrains Mono', monospace;
     font-size: 28px;
     font-weight: 700;
-    background: linear-gradient(135deg, #00d4ff, #bc13fe);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--primary);
     margin-bottom: 6px;
     word-break: break-all;
 }
@@ -438,7 +425,7 @@
 .status-card-label {
     font-family: 'Inter', sans-serif;
     font-size: 11px;
-    color: #a1a1aa;
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 600;
@@ -447,7 +434,7 @@
 .tunnel-list h3 {
     font-family: 'Syne', sans-serif;
     font-size: 16px;
-    color: #f4f4f5;
+    color: var(--text-primary);
     margin: 0 0 16px;
 }
 
@@ -461,8 +448,8 @@
 .tunnel-table th {
     text-align: left;
     padding: 10px 14px;
-    color: #a1a1aa;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
     font-weight: 600;
     text-transform: uppercase;
     font-size: 11px;
@@ -471,20 +458,20 @@
 
 .tunnel-table td {
     padding: 14px;
-    color: #d4d4d8;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
 }
 
 .tunnel-table .mono {
-    color: #00ff88;
+    color: var(--success);
 }
 
 .no-tunnels {
     text-align: center;
     padding: 48px 20px;
-    color: #a1a1aa;
-    background: rgba(24, 24, 27, 0.4);
-    border: 1px dashed rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    background: var(--bg-base);
+    border: 1px dashed var(--border);
     border-radius: 14px;
 }
 
@@ -502,9 +489,9 @@
 
 .refresh-btn {
     align-self: flex-start;
-    background: rgba(24, 24, 27, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #f4f4f5;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
     font-family: 'Syne', sans-serif;
     font-size: 13px;
     font-weight: 600;
@@ -515,9 +502,9 @@
 }
 
 .refresh-btn:hover {
-    border-color: #00d4ff;
-    color: #00d4ff;
-    background: rgba(0, 212, 255, 0.05);
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--bg-elevated);
 }
 
 /* Architecture diagram */
@@ -527,13 +514,12 @@
     justify-content: center;
     gap: 0;
     padding: 40px 20px;
-    background: rgba(24, 24, 27, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 14px;
     margin-bottom: 24px;
     overflow-x: auto;
     flex-wrap: wrap;
-    backdrop-filter: blur(10px);
 }
 
 .arch-node {
@@ -545,21 +531,20 @@
 .arch-icon {
     font-size: 36px;
     margin-bottom: 12px;
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
 }
 
 .arch-label {
     font-family: 'Syne', sans-serif;
     font-size: 13px;
     font-weight: 700;
-    color: #f4f4f5;
+    color: var(--text-primary);
     margin-bottom: 6px;
 }
 
 .arch-detail {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    color: #a1a1aa;
+    color: var(--text-muted);
 }
 
 .arch-arrow {
@@ -573,7 +558,7 @@
 .arch-arrow span {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    color: #a1a1aa;
+    color: var(--text-muted);
     white-space: nowrap;
     text-transform: uppercase;
 }
@@ -581,7 +566,7 @@
 .arrow-line {
     width: 60px;
     height: 2px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--border);
     position: relative;
 }
 
@@ -590,17 +575,16 @@
     position: absolute;
     right: -8px;
     top: -9px;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted);
     font-size: 16px;
 }
 
 .arrow-line.encrypted {
-    background: linear-gradient(90deg, #00d4ff, #bc13fe);
-    box-shadow: 0 0 10px rgba(188, 19, 254, 0.4);
+    background: var(--primary);
 }
 
 .arrow-line.encrypted::after {
-    color: #bc13fe;
+    color: var(--primary);
 }
 
 /* How it works cards */
@@ -611,37 +595,36 @@
 }
 
 .how-card {
-    background: rgba(24, 24, 27, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 14px;
     padding: 24px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
 }
 
 .how-card:hover {
-    border-color: rgba(188, 19, 254, 0.4);
+    border-color: var(--secondary);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 24px var(--shadow);
 }
 
 .how-card h4 {
     font-family: 'Syne', sans-serif;
     font-size: 15px;
-    color: #f4f4f5;
+    color: var(--text-primary);
     margin: 0 0 10px;
 }
 
 .how-card p {
     font-family: 'Inter', sans-serif;
     font-size: 13px;
-    color: #d4d4d8;
+    color: var(--text-secondary);
     margin: 0;
     line-height: 1.6;
 }
 
 .how-card strong {
-    color: #00d4ff;
+    color: var(--primary);
 }
 
 @media (max-width: 768px) {
