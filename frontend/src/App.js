@@ -6,33 +6,33 @@ import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 function App() {
-    const [token, setToken] = useState(localStorage.getItem('token'));
+ const [token, setToken] = useState(localStorage.getItem('token'));
 
-    useEffect(() => {
-        const handleStorageChange = () => {
-            setToken(localStorage.getItem('token'));
-        };
-        window.addEventListener('storage', handleStorageChange);
-        return () => window.removeEventListener('storage', handleStorageChange);
-    }, []);
+ useEffect(() => {
+ const handleStorageChange = () => {
+ setToken(localStorage.getItem('token'));
+ };
+ window.addEventListener('storage', handleStorageChange);
+ return () => window.removeEventListener('storage', handleStorageChange);
+ }, []);
 
-    return (
-        <Router>
-            <Routes>
-                <Route path="/login" element={<Login setToken={setToken} />} />
-                <Route path="/register" element={<Register setToken={setToken} />} />
-                <Route
-                    path="/dashboard"
-                    element={
-                        <PrivateRoute>
-                            <Dashboard />
-                        </PrivateRoute>
-                    }
-                />
-                <Route path="/" element={token ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
-            </Routes>
-        </Router>
-    );
+ return (
+ <Router>
+ <Routes>
+ <Route path="/login" element={<Login setToken={setToken} />} />
+ <Route path="/register" element={<Register setToken={setToken} />} />
+ <Route
+ path="/dashboard"
+ element={
+ <PrivateRoute>
+ <Dashboard />
+ </PrivateRoute>
+ }
+ />
+ <Route path="/" element={token ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+ </Routes>
+ </Router>
+ );
 }
 
 export default App;
