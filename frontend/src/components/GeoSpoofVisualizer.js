@@ -241,15 +241,15 @@ function GeoSpoofVisualizer({ selectedServer, isConnected }) {
 
             ctx.clearRect(0, 0, W, H);
 
-            // Dark mocha background
-            ctx.fillStyle = '#251e1c';
+            // Light cappuccino background
+            ctx.fillStyle = '#e8dbce';
             ctx.fillRect(0, 0, W, H);
 
             // Stars -> Subtle dust particles
             if (phaseRef.current < 0.02) {
                 // Generate star positions once conceptually — draw them every frame
             }
-            ctx.fillStyle = 'rgba(245, 242, 235, 0.2)';
+            ctx.fillStyle = 'rgba(61, 44, 35, 0.1)';
             // Simple star grid based on pseudo-random positions
             for (let i = 0; i < 60; i++) {
                 const sx = ((i * 137.5) % W);
@@ -258,7 +258,7 @@ function GeoSpoofVisualizer({ selectedServer, isConnected }) {
             }
 
             // Grid lines
-            ctx.strokeStyle = 'rgba(245, 242, 235, 0.03)';
+            ctx.strokeStyle = 'rgba(61, 44, 35, 0.05)';
             ctx.lineWidth = 0.5;
             for (let lon2 = -180; lon2 <= 180; lon2 += 30) {
                 const { x } = latLonToXY(0, lon2, W, H);
@@ -270,7 +270,7 @@ function GeoSpoofVisualizer({ selectedServer, isConnected }) {
             }
 
             // Draw continent blobs as large overlapping circles
-            ctx.fillStyle = 'rgba(74, 61, 56, 0.8)';
+            ctx.fillStyle = 'rgba(206, 192, 179, 0.8)';
             CONTINENTS.forEach(({ lat, lon }) => {
                 const { x, y } = latLonToXY(lat, lon, W, H);
                 ctx.beginPath();
@@ -279,7 +279,7 @@ function GeoSpoofVisualizer({ selectedServer, isConnected }) {
             });
 
             // Continent outlines glow
-            ctx.strokeStyle = 'rgba(217, 142, 87, 0.2)';
+            ctx.strokeStyle = 'rgba(168, 153, 138, 0.3)';
             ctx.lineWidth = 1;
             CONTINENTS.forEach(({ lat, lon }) => {
                 const { x, y } = latLonToXY(lat, lon, W, H);
@@ -321,8 +321,8 @@ function GeoSpoofVisualizer({ selectedServer, isConnected }) {
                     // Idle node
                     ctx.beginPath();
                     ctx.arc(x, y, 4 + pulse * 1, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(137,168,125,${0.5 + pulse * 0.3})`;
-                    ctx.shadowColor = '#89a87d';
+                    ctx.fillStyle = `rgba(108,145,101,${0.5 + pulse * 0.3})`;
+                    ctx.shadowColor = '#6c9165';
                     ctx.shadowBlur = 5;
                     ctx.fill();
                     ctx.shadowBlur = 0;
