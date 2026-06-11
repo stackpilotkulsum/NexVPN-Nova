@@ -139,7 +139,10 @@ function Dashboard() {
             {/* ── Header ─────────────────────────────────────────────────── */}
             <div className="dashboard-header">
                 <div className="header-left">
-                    <h1>⬡ NEXVPN</h1>
+                    <h1>
+                        <span className="logo-icon">⬡</span> 
+                        NEX<span className="logo-light">VPN</span>
+                    </h1>
 
                     {/* Status badge — reflects VPN state, not raw socket state */}
                     <span

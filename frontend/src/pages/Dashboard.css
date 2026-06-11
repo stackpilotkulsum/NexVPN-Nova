@@ -1,8 +1,18 @@
+@keyframes fantasticMesh {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 .dashboard {
     min-height: 100vh;
-    background: var(--bg-deep);
     padding: 16px;
     position: relative;
+    /* Fantastic Animated Background */
+    background: linear-gradient(-45deg, #e8dbce, #d4ebd9, #e8e3ce, #cce3db);
+    background-size: 400% 400%;
+    animation: fantasticMesh 15s ease infinite;
+    overflow: hidden;
 }
 
 .dashboard-header {
@@ -63,14 +73,29 @@
 
 .header-left h1 {
     font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 20px;
+    font-weight: 900;
+    font-size: 26px;
     color: var(--text-primary);
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+    letter-spacing: 2px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    text-shadow: 0 4px 15px rgba(10, 59, 24, 0.15);
+}
+
+.logo-icon {
+    font-size: 32px;
+    margin-right: 8px;
+    background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    filter: drop-shadow(0 2px 6px rgba(46,102,58,0.4));
+}
+
+.logo-light {
+    font-weight: 400;
+    opacity: 0.7;
 }
 
 .header-right {
