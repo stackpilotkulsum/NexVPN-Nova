@@ -29,13 +29,16 @@ function Register({ setToken }) {
     };
 
     return (
-        <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', background:'var(--bg-deep)', padding:'20px' }}>
+        <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', padding:'20px', background: 'linear-gradient(-45deg, #e8dbce, #d4ebd9, #e8e3ce, #cce3db)', backgroundSize: '400% 400%', animation: 'fantasticMesh 15s ease infinite', overflow: 'hidden' }}>
             <div style={{ width:'100%', maxWidth:'420px' }}>
                 <div style={{ textAlign:'center', marginBottom:'40px' }}>
-                    <div style={{ fontSize:'42px', fontFamily:'Syne,sans-serif', fontWeight:'800', background:'linear-gradient(135deg, var(--accent-cyan), var(--accent-green))', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' }}>⬡ NEXVPN</div>
+                    <div style={{ fontSize:'42px', fontFamily:'Syne,sans-serif', fontWeight:'900', color: 'var(--text-primary)', letterSpacing:'2px', display:'flex', alignItems:'center', justifyContent:'center', textShadow: '0 4px 15px rgba(10, 59, 24, 0.15)' }}>
+                        <span className="logo-icon">⬡</span> 
+                        NEX<span className="logo-light">VPN</span>
+                    </div>
                     <div style={{ fontFamily:'JetBrains Mono', fontSize:'11px', color:'var(--text-muted)', letterSpacing:'3px', marginTop:'6px' }}>SECURE TUNNEL SYSTEM</div>
                 </div>
-                <div style={{ background:'var(--bg-card)', border:'1px solid var(--border)', borderRadius:'16px', padding:'32px', position:'relative', overflow:'hidden' }}>
+                <div style={{ background:'var(--bg-card)', border:'1px solid var(--border)', borderRadius:'16px', padding:'32px', position:'relative', overflow:'hidden', backdropFilter: 'blur(8px)' }}>
                     <div style={{ position:'absolute', top:0, left:0, right:0, height:'2px', background:'linear-gradient(90deg, transparent, var(--accent-purple), transparent)' }}></div>
                     <div style={{ fontFamily:'Syne,sans-serif', fontWeight:'700', fontSize:'20px', color:'var(--text-primary)', marginBottom:'6px' }}>Create Account</div>
                     <div style={{ fontFamily:'JetBrains Mono', fontSize:'11px', color:'var(--text-muted)', marginBottom:'28px' }}>Register to get your secure tunnel access</div>
