@@ -30,7 +30,7 @@ function Login({ setToken }) {
     };
 
     return (
-        <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', padding:'20px', background: 'linear-gradient(-45deg, #e8dbce, #d4ebd9, #e8e3ce, #cce3db)', backgroundSize: '400% 400%', animation: 'fantasticMesh 15s ease infinite', overflow: 'hidden' }}>
+        <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', padding:'20px', overflow: 'hidden' }}>
             <div style={{ width:'100%', maxWidth:'420px' }}>
                 {/* Logo */}
                 <div style={{ textAlign:'center', marginBottom:'40px' }}>

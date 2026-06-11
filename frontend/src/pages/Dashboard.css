@@ -8,11 +8,6 @@
     min-height: 100vh;
     padding: 16px;
     position: relative;
-    /* Fantastic Animated Background */
-    background: linear-gradient(-45deg, #e8dbce, #d4ebd9, #e8e3ce, #cce3db);
-    background-size: 400% 400%;
-    animation: fantasticMesh 15s ease infinite;
-    overflow: hidden;
 }
 
 .dashboard-header {
