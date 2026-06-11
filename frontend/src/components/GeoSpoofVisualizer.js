@@ -124,17 +124,18 @@ function GeoSpoofVisualizer({ selectedServer, isConnected }) {
             }
         }
 
-        // 2. Try ipapi.co directly from browser (client-side IP lookup)
+        // 2. Try ipinfo.io first (often more accurate for Indian ISPs)
         try {
-            const r2 = await axios.get('https://ipapi.co/json/', { timeout: 5000 });
+            const r2 = await axios.get('https://ipinfo.io/json', { timeout: 5000 });
             const d2 = r2.data;
-            const lat = parseFloat(d2.latitude);
-            const lon = parseFloat(d2.longitude);
+            const loc = d2.loc ? d2.loc.split(',') : [];
+            const lat = parseFloat(loc[0]);
+            const lon = parseFloat(loc[1]);
             if (!isNaN(lat) && !isNaN(lon)) {
                 setRealLocation({
                     ip: d2.ip,
                     city: d2.city || 'Unknown',
-                    country: d2.country_name || 'Unknown',
+                    country: d2.country || 'Unknown',
                     isp: d2.org || 'Unknown',
                     latitude: lat,
                     longitude: lon,
@@ -145,6 +146,30 @@ function GeoSpoofVisualizer({ selectedServer, isConnected }) {
                 return;
             }
         } catch (e2) {
+            console.log('Direct ipinfo.io lookup failed, trying ipapi.co');
+        }
+
+        // 3. Try ipapi.co directly from browser (client-side IP lookup)
+        try {
+            const r3 = await axios.get('https://ipapi.co/json/', { timeout: 5000 });
+            const d3 = r3.data;
+            const lat = parseFloat(d3.latitude);
+            const lon = parseFloat(d3.longitude);
+            if (!isNaN(lat) && !isNaN(lon)) {
+                setRealLocation({
+                    ip: d3.ip,
+                    city: d3.city || 'Unknown',
+                    country: d3.country_name || 'Unknown',
+                    isp: d3.org || 'Unknown',
+                    latitude: lat,
+                    longitude: lon,
+                    accuracy: 'ip',
+                });
+                setLocationError(false);
+                setLoading(false);
+                return;
+            }
+        } catch (e3) {
             console.log('Direct ipapi.co lookup failed, trying ip-api.com');
         }
 

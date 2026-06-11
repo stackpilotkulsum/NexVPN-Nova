@@ -110,19 +110,44 @@ export default function NetworkMonitor() {
             }
         }
 
-        // 2. Try ipapi.co directly from browser (best detailed info)
+        // 2. Try ipinfo.io first (often more accurate for Indian ISPs)
         try {
-            const r2 = await axios.get('https://ipapi.co/json/', { timeout: 5000 });
+            const r2 = await axios.get('https://ipinfo.io/json', { timeout: 5000 });
             const d2 = r2.data;
+            const loc = d2.loc ? d2.loc.split(',') : [];
+            const lat = parseFloat(loc[0]);
+            const lon = parseFloat(loc[1]);
             setPublicIP({
                 ip:        d2.ip,
-                country:   d2.country_name || 'N/A',
+                country:   d2.country      || 'N/A',
                 city:      d2.city         || 'N/A',
                 region:    d2.region       || 'N/A',
                 isp:       d2.org          || 'N/A',
                 timezone:  d2.timezone     || 'N/A',
-                latitude:  d2.latitude  != null ? parseFloat(d2.latitude)  : null,
-                longitude: d2.longitude != null ? parseFloat(d2.longitude) : null,
+                latitude:  !isNaN(lat) ? lat : null,
+                longitude: !isNaN(lon) ? lon : null,
+                accuracy: 'ip'
+            });
+            setIpLoading(false);
+            return;
+        } catch {
+            console.log('Direct ipinfo.io lookup failed, trying ipapi.co');
+        }
+
+        // 3. Try ipapi.co directly from browser (backup)
+        try {
+            const r3 = await axios.get('https://ipapi.co/json/', { timeout: 5000 });
+            const d3 = r3.data;
+            setPublicIP({
+                ip:        d3.ip,
+                country:   d3.country_name || 'N/A',
+                city:      d3.city         || 'N/A',
+                region:    d3.region       || 'N/A',
+                isp:       d3.org          || 'N/A',
+                timezone:  d3.timezone     || 'N/A',
+                latitude:  d3.latitude  != null ? parseFloat(d3.latitude)  : null,
+                longitude: d3.longitude != null ? parseFloat(d3.longitude) : null,
+                accuracy: 'ip'
             });
             setIpLoading(false);
             return;
