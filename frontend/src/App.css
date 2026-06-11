@@ -56,30 +56,40 @@
 body {
     font-family: 'Syne', sans-serif;
     background: var(--bg-deep);
-    min-height: 100vh;
     color: var(--text-primary);
-    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    position: relative;
 }
 
+/* Background Aesthetic Patterns */
 body::before {
     content: '';
     position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: 
-        radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.04) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(124, 58, 237, 0.04) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(0, 255, 136, 0.02) 0%, transparent 70%);
-    pointer-events: none;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    /* Dotted Tech Grid */
+    background-image: 
+        radial-gradient(rgba(10, 59, 24, 0.12) 1px, transparent 1px),
+        radial-gradient(rgba(10, 59, 24, 0.08) 1px, transparent 1px);
+    background-size: 20px 20px, 100px 100px;
+    background-position: 0 0, 10px 10px;
     z-index: 0;
-    animation: bgShift 20s ease-in-out infinite alternate;
+    pointer-events: none;
 }
 
-@keyframes bgShift {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    100% { transform: translate(-2%, -2%) rotate(1deg); }
+body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    /* Cyber/Geometric Crosses */
+    background-image: 
+        linear-gradient(0deg, transparent 49%, rgba(10, 59, 24, 0.08) 49%, rgba(10, 59, 24, 0.08) 51%, transparent 51%),
+        linear-gradient(90deg, transparent 49%, rgba(10, 59, 24, 0.08) 49%, rgba(10, 59, 24, 0.08) 51%, transparent 51%);
+    background-size: 150px 150px;
+    background-position: 75px 75px;
+    z-index: 0;
+    pointer-events: none;
 }
 
 #root { min-height: 100vh; position: relative; z-index: 1; }
