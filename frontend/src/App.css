@@ -68,28 +68,20 @@ body::before {
     content: '';
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
-    /* Dotted Tech Grid */
-    background-image: 
-        radial-gradient(rgba(10, 59, 24, 0.12) 1px, transparent 1px),
-        radial-gradient(rgba(10, 59, 24, 0.08) 1px, transparent 1px);
-    background-size: 20px 20px, 100px 100px;
-    background-position: 0 0, 10px 10px;
+    /* Aesthetic Generated Background Pattern */
+    background-image: url('/bg-pattern.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     z-index: 0;
     pointer-events: none;
+    opacity: 0.25; /* Blend with the mesh gradient */
+    mix-blend-mode: multiply; /* Looks great on light backgrounds */
 }
 
+/* We don't need body::after anymore since the image has all the tech patterns */
 body::after {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    /* Cyber/Geometric Crosses */
-    background-image: 
-        linear-gradient(0deg, transparent 49%, rgba(10, 59, 24, 0.08) 49%, rgba(10, 59, 24, 0.08) 51%, transparent 51%),
-        linear-gradient(90deg, transparent 49%, rgba(10, 59, 24, 0.08) 49%, rgba(10, 59, 24, 0.08) 51%, transparent 51%);
-    background-size: 150px 150px;
-    background-position: 75px 75px;
-    z-index: 0;
-    pointer-events: none;
+    display: none;
 }
 
 #root { min-height: 100vh; position: relative; z-index: 1; }
